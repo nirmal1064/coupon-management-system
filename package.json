@@ -1,0 +1,23 @@
+{
+  "name": "coupons-manager",
+  "version": "1.0.0",
+  "description": "",
+  "private": "true",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nirmal1064/coupon-management-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nirmal1064/coupon-management-system/issues"
+  },
+  "homepage": "https://github.com/nirmal1064/coupon-management-system#readme"
+}
