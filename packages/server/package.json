@@ -24,6 +24,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@coupons-manager/common": "1.0.0",
     "@prisma/client": "^4.4.0",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",

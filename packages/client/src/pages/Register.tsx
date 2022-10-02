@@ -116,7 +116,7 @@ const Register = () => {
             Register
           </Button>
         </Box>
-        <Typography variant="h6">
+        <Typography variant="h6" mb={2}>
           Already have an Account?{" "}
           <Link to={"/login"} style={{ textDecoration: "none", color: "blue" }}>
             Login
