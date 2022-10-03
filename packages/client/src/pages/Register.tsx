@@ -31,12 +31,9 @@ const Register = () => {
       return;
     }
     const body = JSON.stringify({ email, password, name, username });
-    console.log(body);
     API.post("/api/register", body)
       .then((res: AxiosResponse) => {
-        const { data } = res;
-        console.log(data);
-        // navigate("/");
+        navigate("/");
       })
       .catch((err: AxiosError) => {
         console.log(err.response?.data);

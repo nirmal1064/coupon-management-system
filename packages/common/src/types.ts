@@ -9,7 +9,7 @@ export type UserType = {
 export type CouponBodyType = {
   id: string | null;
   userId: string;
-  description: string;
+  title: string;
   provider: string;
   targetApp: string;
   usedDate?: Date;
@@ -17,3 +17,5 @@ export type CouponBodyType = {
   couponCode?: string;
   status: string;
 };
+
+export type ErrorMessageType = { msg: string };

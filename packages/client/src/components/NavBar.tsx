@@ -28,7 +28,10 @@ const unauthorizedLinks = [
   { to: "/register", text: "Register" }
 ];
 
-const authorizedLinks = [{ to: "/", text: "Home" }];
+const authorizedLinks = [
+  { to: "/", text: "Home" },
+  { to: "/add", text: "Add Coupon" }
+];
 
 const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -43,7 +46,6 @@ const NavBar = () => {
   const handleLogout = () => {
     API.post("/api/logout").then((res: AxiosResponse) => {
       const { data } = res;
-      console.log(data);
       dispatch(clearState());
     });
   };

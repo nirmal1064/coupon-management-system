@@ -3,6 +3,7 @@ import helmet from "helmet";
 import cors, { CorsOptions } from "cors";
 import userRouter from "./routes/user.router";
 import cookieParser from "cookie-parser";
+import couponRouter from "./routes/coupon.router";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api", userRouter);
+app.use("/coupon", couponRouter);
 
 app.get("/", (_req: Request, res: Response) => {
   res.json({ message: "Hello World!" });

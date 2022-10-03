@@ -1,16 +1,16 @@
 import LockPersonIcon from "@mui/icons-material/LockPerson";
+import Alert from "@mui/material/Alert";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { useState } from "react";
-import Alert from "@mui/material/Alert";
 import { AxiosError, AxiosResponse } from "axios";
-import API from "../api";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import API from "../api";
 import { login } from "../features/user/userSlice";
+import { useAppDispatch } from "../redux/hooks";
 
 const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
@@ -32,7 +32,6 @@ const Login = () => {
         const { data } = res;
         dispatch(login(data));
         localStorage.setItem("user", JSON.stringify(data));
-        console.log("Login Successfull going to home");
         navigate("/");
       })
       .catch((err: AxiosError) => {

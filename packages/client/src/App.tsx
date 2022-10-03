@@ -3,9 +3,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AddCoupon from "./pages/AddCoupon";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import "./App.css";
 
 const App = () => {
   return (
@@ -18,6 +20,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Home />} />
+            <Route path="/add" element={<AddCoupon />} />
           </Route>
         </Routes>
       </Container>
