@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nirmal1064/coupon-management-system.git"
+    "url": "git+https://github.com/nirmal1064/coupons-manager.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nirmal1064/coupon-management-system/issues"
+    "url": "https://github.com/nirmal1064/coupons-manager/issues"
   },
-  "homepage": "https://github.com/nirmal1064/coupon-management-system#readme"
+  "homepage": "https://github.com/nirmal1064/coupons-manager#readme"
 }
