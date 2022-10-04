@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import couponReducer from "../features/coupons/couponSlice";
-import userReducer from "../features/user/userSlice";
 import { localStorageMiddleware } from "./middlewares/localStorage";
+import couponReducer from "./slices/couponSlice";
+import userReducer from "./slices/userSlice";
 
 const reducer = combineReducers({ users: userReducer, coupons: couponReducer });
 

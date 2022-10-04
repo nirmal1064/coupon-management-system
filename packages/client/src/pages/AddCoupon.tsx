@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { AxiosError, AxiosResponse } from "axios";
 import React, { useState } from "react";
 import API from "../api";
-import { addCoupon } from "../features/coupons/couponSlice";
+import { addCoupon } from "../features/couponSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const style = { width: "350px" };
