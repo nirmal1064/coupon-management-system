@@ -31,7 +31,6 @@ const Login = () => {
       .then((res: AxiosResponse) => {
         const { data } = res;
         dispatch(login(data));
-        localStorage.setItem("user", JSON.stringify(data));
         navigate("/");
       })
       .catch((err: AxiosError) => {

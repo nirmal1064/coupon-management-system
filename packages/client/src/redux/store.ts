@@ -1,27 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import couponReducer from "../features/coupons/couponSlice";
 import userReducer from "../features/user/userSlice";
+import { localStorageMiddleware } from "./middlewares/localStorage";
 
-const couponMiddleware = (store: any) => (next: any) => (action: any) => {
-  let result;
-  if (action.type.startsWith("coupon")) {
-    result = next(action);
-    const coupons = store.getState().coupons;
-    localStorage.setItem("coupons", JSON.stringify(coupons));
-  } else {
-    result = next(action);
-  }
-  return result;
-};
+const reducer = combineReducers({ users: userReducer, coupons: couponReducer });
 
 export const store = configureStore({
-  reducer: {
-    users: userReducer,
-    coupons: couponReducer
-  },
+  reducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(couponMiddleware)
+    getDefaultMiddleware().concat(localStorageMiddleware)
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof reducer>;
 export type AppDispatch = typeof store.dispatch;

@@ -25,8 +25,8 @@ model Coupon {
   title      String
   provider   String
   targetApp  String
-  usedDate   DateTime?
-  expiryDate DateTime
+  usedDate   DateTime? @db.Date
+  expiryDate DateTime  @db.Date
   couponCode String?
   status     String
 }

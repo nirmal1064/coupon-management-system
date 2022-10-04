@@ -6,7 +6,7 @@ export type UserType = {
   auth: boolean;
 };
 
-export type CouponBodyType = {
+export type CouponType = {
   id: string | null;
   userId: string;
   title: string;

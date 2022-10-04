@@ -1,4 +1,4 @@
-import { CouponBodyType, ErrorMessageType } from "@coupons-manager/common";
+import { ErrorMessageType } from "@coupons-manager/common";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -28,6 +28,7 @@ const AddCoupon = () => {
     API.post("/coupon/add", requestBody)
       .then((res: AxiosResponse) => {
         const { data } = res;
+        console.log(data);
         dispatch(addCoupon(data));
       })
       .catch((err: AxiosError<ErrorMessageType>) => {

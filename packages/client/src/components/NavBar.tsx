@@ -12,7 +12,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api";
@@ -30,7 +30,8 @@ const unauthorizedLinks = [
 
 const authorizedLinks = [
   { to: "/", text: "Home" },
-  { to: "/add", text: "Add Coupon" }
+  { to: "/add", text: "Add Coupon" },
+  { to: "/view", text: "My Coupons" }
 ];
 
 const NavBar = () => {
@@ -44,10 +45,13 @@ const NavBar = () => {
   };
 
   const handleLogout = () => {
-    API.post("/api/logout").then((res: AxiosResponse) => {
-      const { data } = res;
-      dispatch(clearState());
-    });
+    API.post("/api/logout")
+      .then((res: AxiosResponse) => {
+        dispatch(clearState());
+      })
+      .catch((err: AxiosError) => {
+        dispatch(clearState());
+      });
   };
 
   const drawer = (
