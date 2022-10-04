@@ -18,7 +18,7 @@ import {
   clearCoupons,
   loadCoupons,
   removeCoupon
-} from "../features/coupons/couponSlice";
+} from "../redux/slices/couponSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const width = 150;

@@ -16,7 +16,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api";
-import { clearState } from "../features/user/userSlice";
+import { clearState } from "../redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const drawerWidth = 240;
