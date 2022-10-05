@@ -12,9 +12,8 @@ export const localStorageMiddleware: Middleware<{}, RootState> =
       localStorage.setItem("user", JSON.stringify(user));
     }
     if (action.type === "auth/clearState") {
-      console.log("Clearing local storage");
       localStorage.removeItem("user");
-      localStorage.removeItem("coupon");
+      localStorage.removeItem("coupons");
     }
     return result;
   };

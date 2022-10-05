@@ -4,7 +4,7 @@ const Home = () => {
   const user = useAppSelector((state) => state.users);
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <div>Welcome {user.name}</div>
     </div>
   );

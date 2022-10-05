@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import API from "../api";
 import { clearState } from "../redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { clearCoupons } from "../redux/slices/couponSlice";
 
 const drawerWidth = 240;
 
@@ -30,7 +31,6 @@ const unauthorizedLinks = [
 
 const authorizedLinks = [
   { to: "/", text: "Home" },
-  { to: "/add", text: "Add Coupon" },
   { to: "/view", text: "My Coupons" }
 ];
 
@@ -48,9 +48,11 @@ const NavBar = () => {
     API.post("/api/logout")
       .then((res: AxiosResponse) => {
         dispatch(clearState());
+        dispatch(clearCoupons());
       })
       .catch((err: AxiosError) => {
         dispatch(clearState());
+        dispatch(clearCoupons());
       });
   };
 

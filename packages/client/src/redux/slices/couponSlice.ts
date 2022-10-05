@@ -30,8 +30,13 @@ export const couponSlice = createSlice({
   }
 });
 
-export const { loadCoupons, addCoupon, removeCoupon, clearCoupons } =
-  couponSlice.actions;
+export const {
+  loadCoupons,
+  addCoupon,
+  removeCoupon,
+  clearCoupons,
+  updateCoupon
+} = couponSlice.actions;
 
 const couponReducer = couponSlice.reducer;
 

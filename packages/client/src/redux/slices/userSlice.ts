@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserType } from "@coupons-manager/common";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialStateUser: UserType = {
   id: null,

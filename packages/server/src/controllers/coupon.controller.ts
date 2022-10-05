@@ -25,10 +25,10 @@ export const addCoupon = async (req: Request, res: Response) => {
 };
 
 export const removeCoupon = async (req: Request, res: Response) => {
-  const { couponId } = req.body;
+  const { id } = req.body;
   try {
-    await db.coupon.delete({ where: { id: couponId } });
-    res.status(200).json({ msg: "Coupon Deleted" });
+    const coupon = await db.coupon.delete({ where: { id } });
+    res.status(200).json(coupon);
   } catch (error) {
     console.error(error);
     res.status(500).json({ msg: "Unable to delete coupon, Please try again" });
@@ -42,9 +42,10 @@ export const updateCoupon = async (req: Request, res: Response) => {
   try {
     const usedDate = data.usedDate ? new Date(data.usedDate) : undefined;
     const expiryDate = data.expiryDate ? new Date(data.expiryDate) : undefined;
+    const { id, ...dataToUpdate } = data;
     const coupon = await db.coupon.update({
-      where: { id: data.id },
-      data: { ...data, usedDate, expiryDate }
+      where: { id },
+      data: { ...dataToUpdate, usedDate, expiryDate }
     });
     res.status(200).json(coupon);
   } catch (error) {
@@ -57,7 +58,6 @@ export const getCoupons = async (req: Request, res: Response) => {
   const userId = (req as CustomRequestType).userId;
   try {
     const coupons = await db.coupon.findMany({ where: { userId } });
-    console.log(typeof coupons[0].expiryDate);
     res.status(200).json(coupons);
   } catch (error) {
     console.error(error);

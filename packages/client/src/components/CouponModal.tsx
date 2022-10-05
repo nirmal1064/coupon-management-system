@@ -15,7 +15,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import React, { useState } from "react";
 import API from "../api";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { addCoupon } from "../redux/slices/couponSlice";
+import { addCoupon, updateCoupon } from "../redux/slices/couponSlice";
 
 type AddCouponModalType = {
   open: boolean;
@@ -37,19 +37,44 @@ const CouponModal = ({
   const user = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
   const [errorMsg, setErrorMsg] = useState("");
+  const [msg, setMsg] = useState("");
 
-  const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const getFormBody = (e: React.FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget);
     const body: { [key: string]: string } = {};
     formData.forEach((value, key) => (body[key] = value.toString()));
     body["userId"] = user.id as string;
+    return body;
+  };
+
+  const handleAdd = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const body: { [key: string]: string } = getFormBody(e);
     const requestBody = JSON.stringify(body);
     API.post("/coupon/add", requestBody)
-      .then((res: AxiosResponse) => {
+      .then((res: AxiosResponse<CouponType>) => {
         const { data } = res;
         dispatch(addCoupon(data));
-        e.currentTarget.reset();
+        setMsg("Success! Coupon Added");
+      })
+      .catch((err: AxiosError<ErrorMessageType>) => {
+        const msg = err.response?.data.msg as string;
+        setErrorMsg(msg);
+      });
+    e.currentTarget.reset();
+  };
+
+  const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const body: { [key: string]: string } = getFormBody(e);
+    const couponId = coupon?.id as string;
+    body["id"] = couponId;
+    const requestBody = JSON.stringify(body);
+    API.post("/coupon/update", requestBody)
+      .then((res: AxiosResponse<CouponType>) => {
+        const { data } = res;
+        dispatch(updateCoupon(data));
+        setMsg("Success! Coupon Updated");
       })
       .catch((err: AxiosError<ErrorMessageType>) => {
         const msg = err.response?.data.msg as string;
@@ -57,9 +82,12 @@ const CouponModal = ({
       });
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>
+    action === "add" ? handleAdd(e) : handleUpdate(e);
+
   return (
     <Dialog open={open} onClose={handleClose}>
-      <Box component="form" onSubmit={handleAdd}>
+      <Box component="form" onSubmit={handleSubmit}>
         <DialogTitle>
           <Typography style={{ textAlign: "center", fontSize: "24px" }}>
             {title}
@@ -143,6 +171,11 @@ const CouponModal = ({
               InputLabelProps={{ shrink: true }}
             />
           </Stack>
+          {msg && (
+            <Alert onClose={() => setMsg("")} severity="success">
+              {msg}
+            </Alert>
+          )}
           {errorMsg && (
             <Alert onClose={() => setErrorMsg("")} severity="error">
               {errorMsg}
@@ -150,13 +183,14 @@ const CouponModal = ({
           )}
         </DialogContent>
         <DialogActions style={{ justifyContent: "center" }}>
-          <Button
-            variant="outlined"
-            startIcon={<CloseIcon />}
-            color="error"
-            onClick={handleClose}>
+          <Button variant="contained" color="error" onClick={handleClose}>
             Close
           </Button>
+          {action === "add" && (
+            <Button variant="contained" color="warning" type="reset">
+              Reset
+            </Button>
+          )}
           <Button variant="contained" type="submit">
             {buttonText}
           </Button>

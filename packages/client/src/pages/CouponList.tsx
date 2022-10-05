@@ -12,49 +12,38 @@ import {
 import { AxiosError, AxiosResponse } from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import API from "../api";
-import CouponModal from "../components/CouponModal";
 import AddCouponToolBar from "../components/AddCouponToolBar";
+import CouponModal from "../components/CouponModal";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
-  addCoupon,
   clearCoupons,
   loadCoupons,
   removeCoupon
 } from "../redux/slices/couponSlice";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const width = 150;
 
 const CouponList = () => {
   const coupons = useAppSelector((state) => state.coupons);
-  const user = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
   const [selectedCoupons, setSelectedCoupons] = useState<GridRowId[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentCoupon, setCurrentCoupon] = useState<CouponType | undefined>();
   const [action, setAction] = useState<"add" | "edit">("add");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const body: { [key: string]: string } = {};
-    formData.forEach((value, key) => (body[key] = value.toString()));
-    body["userId"] = user.id as string;
-    setCurrentCoupon(undefined);
-    const requestBody = JSON.stringify(body);
-    API.post("/coupon/add", requestBody)
-      .then((res: AxiosResponse) => {
-        const { data } = res;
-        dispatch(addCoupon(data));
-      })
-      .catch((err: AxiosError<ErrorMessageType>) => {
-        const msg = err.response?.data.msg as string;
-      });
-  };
+  const [loading, setLoading] = useState(true);
 
   const handleDelete = (e: SyntheticEvent, id: GridRowId) => {
     e.stopPropagation();
-    dispatch(removeCoupon(id as string));
+    API.post("/coupon/delete", { id })
+      .then((res: AxiosResponse<CouponType>) => {
+        const { data } = res;
+        dispatch(removeCoupon(data.id as string));
+      })
+      .catch((err: AxiosError<ErrorMessageType>) => {
+        const msg = err.response?.data.msg as string;
+        // setErrorMsg(msg);
+      });
   };
 
   const handleEdit = (e: SyntheticEvent, id: GridRowId) => {
@@ -66,8 +55,8 @@ const CouponList = () => {
   };
 
   const openFormModal = () => {
-    setIsFormOpen(true);
     setAction("add");
+    setIsFormOpen(true);
   };
 
   const AddToolBar = () => <AddCouponToolBar handleClick={openFormModal} />;
@@ -130,11 +119,22 @@ const CouponList = () => {
       .then((res: AxiosResponse<CouponType[]>) => {
         const { data } = res;
         dispatch(loadCoupons(data));
+        setLoading(false);
       })
       .catch((err: AxiosError) => {
         dispatch(clearCoupons());
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "10" }}>
+        <CircularProgress size={200} thickness={4} />
+      </div>
+    );
+  }
 
   return (
     <div style={{ height: "80vh", width: "100%" }}>

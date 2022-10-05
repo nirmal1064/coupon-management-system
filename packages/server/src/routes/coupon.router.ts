@@ -11,7 +11,7 @@ const couponRouter: Router = Router();
 
 couponRouter.post("/add", verifyToken, addCoupon);
 couponRouter.post("/update", verifyToken, updateCoupon);
-couponRouter.post("/remove", verifyToken, removeCoupon);
+couponRouter.post("/delete", verifyToken, removeCoupon);
 couponRouter.get("/all", verifyToken, getCoupons);
 
 export default couponRouter;

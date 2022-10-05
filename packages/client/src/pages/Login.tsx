@@ -9,8 +9,8 @@ import { AxiosError, AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api";
-import { login } from "../redux/slices/userSlice";
 import { useAppDispatch } from "../redux/hooks";
+import { login } from "../redux/slices/userSlice";
 
 const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
