@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/nirmal1064/coupons-manager/issues"
   },
-  "homepage": "https://github.com/nirmal1064/coupons-manager#readme"
+  "homepage": "https://github.com/nirmal1064/coupons-manager#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
