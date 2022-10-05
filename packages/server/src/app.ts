@@ -8,6 +8,7 @@ import couponRouter from "./routes/coupon.router";
 const app = express();
 
 const origins = process.env.ALLOWED_ORIGINS?.split(",");
+console.log(`Allowed Origins ${origins}`);
 const corsOptions: CorsOptions = { origin: origins, credentials: true };
 app.use(cors(corsOptions));
 app.use(helmet());
