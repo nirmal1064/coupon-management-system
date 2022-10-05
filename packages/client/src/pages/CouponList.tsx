@@ -1,4 +1,4 @@
-import { CouponType } from "@coupons-manager/common";
+import { CouponType, ErrorMessageType } from "@coupons-manager/common";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import {
@@ -12,9 +12,10 @@ import {
 import { AxiosError, AxiosResponse } from "axios";
 import { SyntheticEvent, useEffect, useState } from "react";
 import API from "../api";
-import AddCouponModal from "../components/AddCouponModal";
+import CouponModal from "../components/CouponModal";
 import AddCouponToolBar from "../components/AddCouponToolBar";
 import {
+  addCoupon,
   clearCoupons,
   loadCoupons,
   removeCoupon
@@ -25,11 +26,31 @@ const width = 150;
 
 const CouponList = () => {
   const coupons = useAppSelector((state) => state.coupons);
+  const user = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
   const [selectedCoupons, setSelectedCoupons] = useState<GridRowId[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentCoupon, setCurrentCoupon] = useState<CouponType | undefined>();
-  const [title, setTitle] = useState<string | undefined>();
+  const [action, setAction] = useState<"add" | "edit">("add");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const body: { [key: string]: string } = {};
+    formData.forEach((value, key) => (body[key] = value.toString()));
+    body["userId"] = user.id as string;
+    setCurrentCoupon(undefined);
+    const requestBody = JSON.stringify(body);
+    API.post("/coupon/add", requestBody)
+      .then((res: AxiosResponse) => {
+        const { data } = res;
+        dispatch(addCoupon(data));
+      })
+      .catch((err: AxiosError<ErrorMessageType>) => {
+        const msg = err.response?.data.msg as string;
+      });
+  };
 
   const handleDelete = (e: SyntheticEvent, id: GridRowId) => {
     e.stopPropagation();
@@ -40,11 +61,14 @@ const CouponList = () => {
     e.stopPropagation();
     const coupon = coupons.find((coupon) => coupon.id === id) as CouponType;
     setCurrentCoupon(coupon);
-    setTitle("Edit Coupon");
+    setAction("edit");
     setIsFormOpen(true);
   };
 
-  const openFormModal = () => setIsFormOpen(true);
+  const openFormModal = () => {
+    setIsFormOpen(true);
+    setAction("add");
+  };
 
   const AddToolBar = () => <AddCouponToolBar handleClick={openFormModal} />;
 
@@ -114,11 +138,11 @@ const CouponList = () => {
 
   return (
     <div style={{ height: "80vh", width: "100%" }}>
-      <AddCouponModal
+      <CouponModal
         open={isFormOpen}
         handleClose={closeFormModal}
-        title={title}
         coupon={currentCoupon}
+        action={action}
       />
       <DataGrid
         editMode="row"

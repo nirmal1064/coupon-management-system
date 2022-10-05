@@ -21,6 +21,7 @@ const AddCoupon = () => {
   const handleAddCoupon = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    e.currentTarget.reset();
     const body: { [key: string]: string } = {};
     formData.forEach((value, key) => (body[key] = value.toString()));
     body["userId"] = user.id as string;
