@@ -9,7 +9,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "yarn workspace @coupons-manager/client",
-    "server": "yarn workspace @coupons-manager/server"
+    "server": "yarn workspace @coupons-manager/server",
+    "build": "yarn client build && yarn server build",
+    "start:client": "yarn client start",
+    "start:server": "yarn server start"
   },
   "repository": {
     "type": "git",
