@@ -12,7 +12,8 @@
     "server": "yarn workspace @coupons-manager/server",
     "build": "yarn client build && yarn server build",
     "start:client": "yarn client start",
-    "start:server": "yarn server start"
+    "start:server": "yarn server start",
+    "build:server": "yarn server install && yarn server build"
   },
   "repository": {
     "type": "git",
