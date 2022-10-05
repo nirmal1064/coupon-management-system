@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 let db: PrismaClient;
 
 declare global {
-  var __db: PrismaClient | undefined;
+  var __db: PrismaClient | undefined; //NOSONAR
 }
 
 if (!global.__db) {

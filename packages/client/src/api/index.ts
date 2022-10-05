@@ -1,13 +1,9 @@
 import axios from "axios";
 
-//const baseURL = import.meta.env.VITE_BACKEND_HOST;
+const baseURL = import.meta.env.VITE_BACKEND_HOST;
 
-const baseURL = "http://localhost:8000";
+const headers = { "Content-type": "application/json" };
 
-const API = axios.create({
-  baseURL,
-  withCredentials: true,
-  headers: { "Content-type": "application/json" }
-});
+const API = axios.create({ baseURL, withCredentials: true, headers });
 
 export default API;

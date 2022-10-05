@@ -42,7 +42,7 @@ const CouponList = () => {
       })
       .catch((err: AxiosError<ErrorMessageType>) => {
         const msg = err.response?.data.msg as string;
-        // setErrorMsg(msg);
+        console.log(msg);
       });
   };
 

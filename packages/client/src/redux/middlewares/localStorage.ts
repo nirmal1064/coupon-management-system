@@ -13,6 +13,8 @@ export const localStorageMiddleware: Middleware<{}, RootState> =
     }
     if (action.type === "auth/clearState") {
       localStorage.removeItem("user");
+    }
+    if (action.type === "coupon/clearCoupons") {
       localStorage.removeItem("coupons");
     }
     return result;
