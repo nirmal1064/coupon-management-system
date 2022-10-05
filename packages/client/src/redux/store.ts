@@ -7,6 +7,7 @@ const reducer = combineReducers({ users: userReducer, coupons: couponReducer });
 
 export const store = configureStore({
   reducer,
+  devTools: import.meta.env.DEV,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(localStorageMiddleware)
 });
