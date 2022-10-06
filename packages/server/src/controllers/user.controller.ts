@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
     });
     res
       .status(200)
-      .cookie("token", token, { httpOnly: true, sameSite: "strict" })
+      .cookie("token", token, { httpOnly: true, secure: true })
       .json({
         id: user.id,
         username: user.username,
